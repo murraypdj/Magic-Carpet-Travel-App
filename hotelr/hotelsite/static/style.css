@@ -1,0 +1,59 @@
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('background.png');
+    background-repeat: repeat; /* or 'no-repeat' or 'repeat-x' or 'repeat-y' based on your preference */
+    background-position: center center;
+    background-attachment: fixed; /* This keeps the background fixed while scrolling */
+    background-size: cover; /* This makes sure the background image covers the entire viewport */
+    color: #333; /* Dark text color */
+}
+
+header {
+    background-color:rgba(9, 66, 11, 0.5); /* Green background color with 50% opacity */
+    color: white; /* White text color */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2em;
+    margin: 0 auto;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+footer {
+    background-color: rgba(9, 66, 11, 0.5);  /* Dark background color */
+    color: white; /* White text color */
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footertext {
+    color: #ffffff; 
+    text-decoration: none;
+}
+
+.weather {
+    color: #ffffff; /* Green link color */
+    text-decoration: none;
+    margin-left: auto;
+}
+
+a:hover {
+    text-decoration: underline;
+}
