@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Hotel, WeatherData
+from .models import Hotel
 import requests
 from decouple import config
 
@@ -71,106 +71,22 @@ def index(request):
     return render(request, 'index.html')
 
 @csrf_exempt
-def weather_view(request, city, state):
-    api_url = f"http://api.weatherbit.io/v2.0/current?city={city},{state}&key=d57506729d474e038baa3c3f5b80f157"
+def weather_view(request, city):
+    api_url = f"http://api.weatherbit.io/v2.0/current?city={city}&key=" + weather_api_key
 
     try:
         response = requests.get(api_url)
         data = response.json()
 
-        # Assuming 'app_temp' is present in the response, adjust this according to the actual structure
-        app_temp = data.get('data', [])[0].get('app_temp', None)
+        result = {
+            "city_name": data["data"][0]["city_name"],
+            "country_code": data["data"][0]["country_code"],
+            "app_temp": data["data"][0]["app_temp"],
+            "description": data["data"][0]["weather"]["description"],
+            "temp": data["data"][0]["temp"]
+        }
 
-        if app_temp is not None:
-            # If the key 'app_temp' is found, return a JsonResponse
-            return JsonResponse({'app_temp': app_temp})
-        else:
-            # If 'app_temp' is not present in the response, return an error response
-            return JsonResponse({'error': 'Invalid data structure'}, status=500)
+        return JsonResponse(result, status=200)
 
     except requests.RequestException as e:
         return JsonResponse({'error': f"Error making API call: {e}"}, status=500)
-    city = city
-    state = state
-    api_url = "http://api.weatherbit.io/v2.0/current?&city=" + city + "," + state + "&key="
-    
-
-    headers = {
-        'Content-Type': 'application/json',
-    }
-
-    try:
-        response = requests.get(api_url + weather_api_key, headers=headers)
-
-        # Check if the request was successful (status code 200)
-        if response.status_code == 200:
-            json_response = response.json()
-
-            # Create a new WeatherData instance and populate it with the data
-            weather_data = WeatherData(
-                app_temp=json_response['data'][0]['app_temp'],
-                aqi=json_response['data'][0]['aqi'],
-                city_name=json_response['data'][0]['city_name'],
-                clouds=json_response['data'][0]['clouds'],
-                country_code=json_response['data'][0]['country_code'],
-                datetime=json_response['data'][0]['datetime'],
-                dewpt=json_response['data'][0]['dewpt'],
-                h_angle=json_response['data'][0]['h_angle'],
-                lat=json_response['data'][0]['lat'],
-                lon=json_response['data'][0]['lon'],
-                ob_time=json_response['data'][0]['ob_time'],
-                precip=json_response['data'][0]['precip'],
-                pres=json_response['data'][0]['pres'],
-                rh=json_response['data'][0]['rh'],
-                snow=json_response['data'][0]['snow'],
-                sunrise=json_response['data'][0]['sunrise'],
-                sunset=json_response['data'][0]['sunset'],
-                temp=json_response['data'][0]['temp'],
-                uv=json_response['data'][0]['uv'],
-                vis=json_response['data'][0]['vis'],
-                wind_cdir=json_response['data'][0]['wind_cdir'],
-                wind_cdir_full=json_response['data'][0]['wind_cdir_full'],
-                wind_dir=json_response['data'][0]['wind_dir'],
-                wind_spd=json_response['data'][0]['wind_spd'],
-            )
-            
-            # Save the WeatherData instance to the database
-            weather_data.save()
-
-            # Convert the WeatherData instance to JSON and return as a response
-            response_data = {
-                'app_temp': str(weather_data.app_temp),
-                'aqi': weather_data.aqi,
-                'city_name': weather_data.city_name,
-                'clouds': weather_data.clouds,
-                'country_code': weather_data.country_code,
-                'datetime': str(weather_data.datetime),
-                'dewpt': str(weather_data.dewpt),
-                'h_angle': str(weather_data.h_angle),
-                'lat': str(weather_data.lat),
-                'lon': str(weather_data.lon),
-                'ob_time': str(weather_data.ob_time),
-                'precip': str(weather_data.precip),
-                'pres': str(weather_data.pres),
-                'rh': weather_data.rh,
-                'snow': str(weather_data.snow),
-                'sunrise': str(weather_data.sunrise),
-                'sunset': str(weather_data.sunset),
-                'temp': str(weather_data.temp),
-                'uv': str(weather_data.uv),
-                'vis': str(weather_data.vis),
-                'wind_cdir': weather_data.wind_cdir,
-                'wind_cdir_full': weather_data.wind_cdir_full,
-                'wind_dir': weather_data.wind_dir,
-                'wind_spd': str(weather_data.wind_spd),
-            }
-
-            return JsonResponse(response_data)
-
-        else:
-            print(f"Error: {response.status_code} - {response.text}")
-            return JsonResponse({'error': 'Failed to fetch weather data'})
-
-    except requests.RequestException as e:
-        print(f"Error making API call: {e}")
-        return JsonResponse({'error': 'Error making API call'})
