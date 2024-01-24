@@ -31,41 +31,32 @@ def search_hotels_view(request, middleClassCode, smallClassCode):
 
     if response.status_code == 200:
         json_response = response.json()
+        # Convert the API response to a simplified JSON format
+        hotels = []
+        for hotel_data in json_response.get('hotels', []):
+            basic_info = hotel_data[0].get('hotelBasicInfo', {})
+            rating_info = hotel_data[1].get('hotelRatingInfo', {})
 
-        # Create a new hotel child with the API response
-        hotel = Hotel.objects.create(
-            hotel_name=json_response.get('hotelName', ''),
-            hotel_image_url=json_response.get('hotelImageUrl', ''),
-            hotel_information_url=json_response.get('hotelInformationUrl', ''),
-            user_review=json_response.get('userReview', ''),
-            service_average=json_response.get('serviceAverage', ''),
-            location_average=json_response.get('locationAverage', ''),
-            room_average=json_response.get('roomAverage', ''),
-            equipment_average=json_response.get('equipmentAverage', ''),
-            bath_average=json_response.get('bathAverage', ''),
-            meal_average=json_response.get('mealAverage', ''),
-            nearest_station=json_response.get('nearestStation', '')
-        )
+            hotel = {
+                'hotelName': basic_info.get('hotelName', ''),
+                'hotelImageUrl': basic_info.get('hotelImageUrl', ''),
+                'hotelInformationUrl': basic_info.get('hotelInformationUrl', ''),
+                'userReview': basic_info.get('userReview', ''),
+                'serviceAverage': float(rating_info.get('serviceAverage', 0)),
+                'locationAverage': float(rating_info.get('locationAverage', 0)),
+                'roomAverage': float(rating_info.get('roomAverage', 0)),
+                'equipmentAverage': float(rating_info.get('equipmentAverage', 0)),
+                'bathAverage': float(rating_info.get('bathAverage', 0)),
+                'mealAverage': float(rating_info.get('mealAverage', 0)),
+                'nearestStation': basic_info.get('nearestStation', '')
+            }
 
-        # Convert the Hotel object to JSON
-        hotel_json = {
-            'hotelName': hotel.hotel_name,
-            'hotelImageUrl': hotel.hotel_image_url,
-            'hotelInformationUrl': hotel.hotel_information_url,
-            'userReview': float(hotel.user_review),
-            'serviceAverage': float(hotel.service_average),
-            'locationAverage': float(hotel.location_average),
-            'roomAverage': float(hotel.room_average),
-            'equipmentAverage': float(hotel.equipment_average),
-            'bathAverage': float(hotel.bath_average),
-            'mealAverage': float(hotel.meal_average),
-            'nearestStation': hotel.nearest_station
-        }
+            hotels.append(hotel)
 
-        return JsonResponse(hotel_json)
+        return JsonResponse({'hotels': hotels})
 
-    else:
-        return JsonResponse({'error': f"Error {response.status_code}: {response.text}"})
+    
+    return JsonResponse({'error': f"Error {response.status_code}: {response.text}"})
 
 def index(request):
     return render(request, 'index.html')

@@ -11,6 +11,7 @@ body {
     background-attachment: fixed; /* This keeps the background fixed while scrolling */
     background-size: cover; /* This makes sure the background image covers the entire viewport */
     color: #333; /* Dark text color */
+    
 }
 
 header {
@@ -20,17 +21,23 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 h1 {
     font-family: 'Dancing Script', cursive;
     font-size: 2em;
-    margin: 0 auto;
+    margin: 10 auto;
 }
 
 main {
-    max-width: 800px;
-    margin: 20px auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
 }
 
 footer {
@@ -56,4 +63,177 @@ footer {
 
 a:hover {
     text-decoration: underline;
+}
+
+.rectangle_search {
+    width: 350px; /* Adjusted width for better visibility */
+    height: 300px;
+    background-color: rgba(9, 66, 11, 0.5);
+    margin: 30px;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centering content horizontally */
+    justify-content: space-around; /* Adding space around the content */
+    color: white;
+}
+.rectangle_present {
+    width: 350px; /* Adjusted width for better visibility */
+    height: 400px;
+    background-color: rgba(9, 66, 11, 0.5);
+    margin: 30px;
+    margin-top: 60px;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centering content horizontally */
+    justify-content: space-around; /* Adding space around the content */
+    color: white;
+    padding: 20px;
+}
+
+#hotel-info{
+    color: #ffffff;
+}
+
+#userReview {
+    overflow: hidden; /* Hide content that exceeds the container */
+    font-size: .8rem; 
+    text-overflow: ellipsis; /* Display an ellipsis (...) when text overflows */
+}
+
+label {
+    padding: 10px;
+}
+
+#prefecture {
+    width: 40%; /* You can adjust this value based on your design */
+    padding: 10px; /* Add padding for better appearance */
+    font-size: 1rem; /* Adjust the font size if needed */
+}
+
+#city {
+    width: 40%; /* You can adjust this value based on your design */
+    padding: 10px; /* Add padding for better appearance */
+    font-size: 1rem; /* Adjust the font size if needed */
+}
+
+.submit-button {
+    border: 0;
+    line-height: 2.5;
+    width: 30%;
+    padding: 10p 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgb(35, 91, 1);
+    background-image: linear-gradient(
+      to top left,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2) 30%,
+      rgba(0, 0, 0, 0)
+    );
+    box-shadow:
+      inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+      inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+  }
+  
+  .submit-button,
+  #sendButton {
+      padding: 10px;
+      cursor: pointer;
+      background-color: rgba(9, 66, 11, .6);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      box-shadow:
+          inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+          inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+  }
+  
+  #sendButton:hover,
+  .submit-button:hover {
+      background-color: rgba(9, 66, 11, 1); /* Change color on hover if needed */
+  }
+  #sendButton {
+    margin-left: 10px;
+   }
+
+  
+
+  
+  @media only screen and (max-width: 767px) {
+    main {
+        flex-direction: column; /* Change direction to column for smaller screens */
+    }
+}
+
+.rectangle_ai {
+    width: 350px;
+    height: 500px;
+    background-color: rgba(9, 66, 11, 0.5);
+    margin: 30px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    padding: 20px;
+
+
+}
+
+.chat-container {
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 300px; /* Set a maximum height for the chat container */
+    margin-top: 10px;
+}
+
+.user-message,
+.assistant-message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+}
+
+.user-message {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #333;
+    align-self: flex-end; /* Align user messages to the right */
+}
+
+.assistant-message {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    align-self: flex-start; /* Align assistant messages to the left */
+}
+
+.user-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    margin-top: 290px;
+}
+
+#userInput {
+    flex: 1;
+    padding: 10px;
+}
+
+.chat-title {
+    font-size: 1.5em;
+    margin-bottom: 0px;
+    color: white;
+    font-family: 'Dancing Script', cursive;
+}
+
+
+.hotel-image {
+
+    width: 60%;
+    height: 30%;
 }
