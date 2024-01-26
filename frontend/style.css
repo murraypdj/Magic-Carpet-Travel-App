@@ -187,7 +187,7 @@ label {
 
 .chat-container {
     overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 300px; /* Set a maximum height for the chat container */
+    height: 500px; /* Set a maximum height for the chat container */
     margin-top: 10px;
 }
 
@@ -215,8 +215,8 @@ label {
     align-items: center;
     justify-content: space-between;
     width: 90%; /* Adjust the width as needed */
-    height: 30px; /* Adjust the height as needed */
-    margin-top: 290px;
+    height: 20px; /* Adjust the height as needed */
+    margin-top: 10px;
 }
 
 #userInput {

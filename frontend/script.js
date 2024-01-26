@@ -86,10 +86,6 @@ function passCityToBackend(city) {
         });
 }
 
-// Call the function to initiate the process
-//initiateWeatherUpdate();
-
-
 
 // handling city dropdown options
 function loadCities() {
@@ -325,7 +321,7 @@ function searchHotels() {
         smallClassCode: selectedCityRomaji
     };
 
-    // Make a request to Django backend using AJAX or fetch API
+    // Make a request to Django backend 
     fetch(`http://127.0.0.1:8000/search_hotels_view/${selectedPrefecture}/${selectedCityRomaji}/`)
         .then(response => response.json())
         .then(jsonData => {
@@ -385,5 +381,41 @@ function moveToNextHotel() {
     }, 10000); // 10 seconds
 }
 
-// Call the function to initiate the process
-//moveToNextHotel();
+
+
+
+//function for chat box
+function sendMessage() {
+    var userInput = document.getElementById("userInput").value;
+
+    // Check if the user input is not empty
+    if (userInput.trim() !== "") {
+        // Use AJAX to send the user message to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:8000/chat_view/" + encodeURIComponent(userInput) + "/", true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Update the chat container with the response from the server
+                var chatContainer = document.getElementById("chatContainer");
+
+                var userMessage = document.createElement("div");
+                userMessage.className = "user-message";
+                userMessage.textContent = userInput;
+
+                var assistantMessage = document.createElement("div");
+                assistantMessage.className = "assistant-message";
+                assistantMessage.textContent = xhr.responseText;
+
+                chatContainer.appendChild(userMessage);
+                chatContainer.appendChild(assistantMessage);
+
+                // Clear the input field
+                document.getElementById("userInput").value = "";
+            }
+        };
+
+        xhr.send();
+    }
+}
+
