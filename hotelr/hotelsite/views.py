@@ -1,9 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Hotel
 import requests
+from django.http import HttpResponse
 from decouple import config
+from openai import OpenAI
+from langdetect import detect
 
 weather_api_key = config('WEATHER_API_KEY')
 rakuten_api_key = config('RAKUTEN_API_KEY')
@@ -81,3 +83,45 @@ def weather_view(request, city):
 
     except requests.RequestException as e:
         return JsonResponse({'error': f"Error making API call: {e}"}, status=500)
+
+def chat_view(request, usrquery):
+
+    user_language = get_language(usrquery)
+
+    if user_language == "ja":
+        system_content = (
+            "You are a helpful travel assistance in Japan on the magic carpet travel site. "
+            "You'll provide customers with fun factoids about cities, things they can do or eat/drink in that city.\n"
+            "Respond in casual friendly Japanese.\n"
+        )
+    else:
+        system_content = (
+            "You are a helpful travel assistance in Japan on the magic carpet travel site. "
+            "You'll provide customers with fun factoids about cities, things they can do or eat/drink in that city.\n"
+        )
+
+    client = OpenAI()
+
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": usrquery}
+        ],
+        temperature=1,
+        max_tokens=256,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+
+    response_message = response.choices[0].message.content
+    return HttpResponse(response_message)
+
+
+def get_language(text):
+    try:
+        language = detect(text)
+        return language
+    except:
+        return "en"  # Default to English if language detection fails

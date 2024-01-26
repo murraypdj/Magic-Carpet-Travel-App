@@ -60,7 +60,7 @@ function reverseGeocode(latitude, longitude) {
 
 // Pass city to Django backend
 function passCityToBackend(city) {
-    const apiUrl = `/weather_view/${city}/`;
+    const apiUrl = `http://127.0.0.1:8000/weather_view/${city}/`;
 
     // Show loading spinner or message
     const weatherElement = document.getElementById('weather');
@@ -326,7 +326,7 @@ function searchHotels() {
     };
 
     // Make a request to Django backend using AJAX or fetch API
-    fetch(`/search_hotels_view/${selectedPrefecture}/${selectedCityRomaji}/`)
+    fetch(`http://127.0.0.1:8000/search_hotels_view/${selectedPrefecture}/${selectedCityRomaji}/`)
         .then(response => response.json())
         .then(jsonData => {
 

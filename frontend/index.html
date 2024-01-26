@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+<link rel="stylesheet" href="style.css"> 
+<script src="script.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Carpet</title>
+</head>
+
+<body onload="initiateWeatherUpdate()">
+
+    <header>
+        <h1>Magic Carpet</h1>
+        <a id="weather" class="weather"> It's currentlys~</a>
+    </header>
+
+    <main class="main-content">
+
+        <div class="rectangle_search">
+            <label for="prefecture">お探しの都道府県を選んでください🔎</label>
+            <select id="prefecture" name="prefecture" onchange="loadCities()">
+                <option value="default">オプションを選択してください</option>
+                <option value="hokkaido">北海道</option>
+                <option value="aomori">青森県</option>
+                <option value="iwate">岩手県</option>
+                <option value="miyagi">宮城県</option>
+                <option value="akita">秋田県</option>
+                <option value="yamagata">山形県</option>
+                <option value="fukushima">福島県</option>
+                <option value="ibaraki">茨城県</option>
+                <option value="tochigi">栃木県</option>
+                <option value="gunma">群馬県</option>
+                <option value="saitama">埼玉県</option>
+                <option value="chiba">千葉県</option>
+                <option value="tokyo">東京都</option>
+                <option value="kanagawa">神奈川県</option>
+                <option value="niigata">新潟県</option>
+                <option value="toyama">富山県</option>
+                <option value="ishikawa">石川県</option>
+                <option value="fukui">福井県</option>
+                <option value="yamanashi">山梨県</option>
+                <option value="nagano">長野県</option>
+                <option value="gifu">岐阜県</option>
+                <option value="shizuoka">静岡県</option>
+                <option value="aichi">愛知県</option>
+                <option value="mie">三重県</option>
+                <option value="shiga">滋賀県</option>
+                <option value="kyoto">京都府</option>
+                <option value="osaka">大阪府</option>
+                <option value="hyogo">兵庫県</option>
+                <option value="nara">奈良県</option>
+                <option value="wakayama">和歌山県</option>
+                <option value="tottori">鳥取県</option>
+                <option value="shimane">島根県</option>
+                <option value="okayama">岡山県</option>
+                <option value="hiroshima">広島県</option>
+                <option value="yamaguchi">山口県</option>
+                <option value="tokushima">徳島県</option>
+                <option value="kagawa">香川県</option>
+                <option value="ehime">愛媛県</option>
+                <option value="kochi">高知県</option>
+                <option value="fukuoka">福岡県</option>
+                <option value="saga">佐賀県</option>
+                <option value="nagasaki">長崎県</option>
+                <option value="kumamoto">熊本県</option>
+                <option value="oita">大分県</option>
+                <option value="miyazaki">宮崎県</option>
+                <option value="kagoshima">鹿児島県</option>
+                <option value="okinawa">沖縄県</option>
+             </select>
+
+             <label for="city">市町村を選んでください🔎</label>
+             <select id="city" name="city">
+                 <!-- Cities for the selected prefecture will be dynamically added here -->
+             </select>
+
+            <button class="submit-button" type="button" onclick="searchHotels()">NEXT</button>
+        </div>
+
+            <div class="rectangle_present">
+                 <a class="hotel-name" id="hotelName">ホテル Oasis</a>
+                 <img src="hotel.jpg" alt="Hotel Image" class="hotel-image" id="hotelImageUrl">
+                 <a class="hotel-info" id="hotelInformationUrl">ホテル情報</a>                
+                 <a class="service-average" id="serviceAverage">サービス平均：</a>
+                 <a class="location-average" id="locationAverage">立地平均：</a>
+                 <a class="room-average" id="roomAverage">部屋平均：</a>
+                 <a class="equipment-average" id="equipmentAverage">設備平均</a>
+                 <a class="bath-average" id="bathAverage">バスルーム平均：</a>
+                 <a class="meal-average" id="mealAverage">食事平均：</a>
+                 <a class="nearest-station" id="nearestStation">最寄り駅：</a> 
+                 <a class="user-review" id="userReview">ユーザーレビュー：</a>                                  
+        </div>
+
+        <div class="rectangle_ai">
+            <h2 class="chat-title">Ask Genie</h2>
+            <div class="chat-container" id="chatContainer">
+                <!-- Chat messages go here -->
+                <div class="user-message">Hello!</div>
+                <div class="assistant-message">Hi there! How can I assist you today?</div>
+            </div>
+            <div class="user-input">
+                <input type="text" id="userInput" placeholder="Type your message...">
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+        
+
+    </main>
+
+    <footer class="solid-color-footer">
+        <a id="footertext" class="footertext">Powered by Rakuten, WeatherTech, & OpenAi! Made by Peter Murray</a>
+    </footer>
+
+</body>
+</html>
